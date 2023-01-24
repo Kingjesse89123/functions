@@ -359,7 +359,7 @@ export default function App() {
     }
     const [orders25, setOrders25] = useState()
     useEffect(() => {
-        fetch(`https://blueplate.directus.app/items/orders?sort[]=-date_created&filter[_and][0][date_created][_between][0]=${startDate}&filter[_and][0][date_created][_between][1]=${endDate}&filter[restaurant][id][_eq]=${restId}&fields[]=line_items.products.name&fields[]=id,total,tax,tip,subtotal,date_created&fields[]=line_items.ingredients_on_product.ingredients_id.name&fields[]=line_items.selections_on_product.ingredient_id.name&fields[]=line_items.ingredients_on_product.amount&fields[]=line_items.selections_on_product.selections_id.name&fields[]=customer.first_name&fields[]=customer.last_name&fields[]=customer.email&fields[]=customer.phone`)
+        fetch(`https://blueplate.directus.app/items/orders?filter[restaurant][id][_eq]=${restId}&fields[]=line_items.products.name&fields[]=conv_fee,id,total,tax,tip,subtotal,date_created&fields[]=line_items.ingredients_on_product.ingredients_id.name&fields[]=line_items.selections_on_product.ingredient_id.name&fields[]=line_items.ingredients_on_product.amount&fields[]=line_items.selections_on_product.selections_id.name&fields[]=customer.first_name&fields[]=customer.last_name&fields[]=customer.email&fields[]=customer.phone`)
             .then(response => response.json())
             .then(res => {
                 setOrders25(res)
@@ -380,6 +380,7 @@ export default function App() {
                     subtotal: orders[i].subtotal,
                     tax:  orders[i].tax,
                     tip:  orders[i].tip,
+                    convFee: orders[i].conv_fee,
                     customer: orders[i].customer,
                     line_items: []
                 })
